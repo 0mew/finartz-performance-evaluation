@@ -45,4 +45,6 @@ public class Competency {
     @OneToMany(mappedBy = "competency", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Question> questions;
+
+    private Double weight;
 }

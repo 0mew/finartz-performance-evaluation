@@ -14,4 +14,5 @@ public class CreateCompetencyRequest {
     private String name;
     private String description;
     private Long evaluationId;
+    private Double weight;
 }

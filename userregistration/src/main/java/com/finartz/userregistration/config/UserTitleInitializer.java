@@ -31,4 +31,7 @@ public class UserTitleInitializer implements CommandLineRunner{
             userTitleRepository.save(new UserTitle(14, "UI/UX Designer"));
         }
     }
+
+    
+    
 }

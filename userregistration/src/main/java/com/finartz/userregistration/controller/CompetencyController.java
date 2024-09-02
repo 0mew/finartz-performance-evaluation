@@ -1,23 +1,16 @@
 package com.finartz.userregistration.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.finartz.userregistration.entity.Competency;
 import com.finartz.userregistration.request.CreateCompetencyRequest;
 import com.finartz.userregistration.service.CompetencyService;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -46,6 +39,21 @@ public class CompetencyController {
     public ResponseEntity<String> deleteCompetency(@PathVariable Long competencyId) {
         competencyService.deleteCompetency(competencyId);
         return ResponseEntity.status(HttpStatus.OK).body("Competency deleted!");
+    }
+
+    @PutMapping("/settings/weight")
+    public ResponseEntity<List<Competency>> saveWeightSettings(@RequestParam Long evaluationId, @RequestBody Map<Long, Double> weightMap) {
+        try {
+            List<Competency> updatedCompetencies = competencyService.saveWeightSettings(weightMap, evaluationId);
+            return ResponseEntity.ok(updatedCompetencies);
+        } catch (IllegalAccessException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @GetMapping("/settings/weight")
+    public ResponseEntity<List<Competency>> getAllWeightSettings() {
+        return ResponseEntity.ok(competencyService.getAllWeightSettings());
     }
 
 }

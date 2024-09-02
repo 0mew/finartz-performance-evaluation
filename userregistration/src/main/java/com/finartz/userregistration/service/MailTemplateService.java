@@ -1,6 +1,5 @@
 package com.finartz.userregistration.service;
 
-<<<<<<< HEAD
 import com.finartz.userregistration.Result.Result;
 import com.finartz.userregistration.request.CreateMailTemplateRequest;
 import com.finartz.userregistration.request.DeleteMailTemplateRequest;
@@ -17,11 +16,3 @@ public interface MailTemplateService {
     ResponseEntity<MailTemplateResponse> getByid(Long id);
     ResponseEntity<List<MailTemplateResponse>> getAll();
 }
-=======
-import com.finartz.userregistration.entity.MailTemplate;
-import com.finartz.userregistration.request.CreateMailTemplateRequest;
-
-public interface MailTemplateService {
-    MailTemplate createMailTemplate(CreateMailTemplateRequest mailTemplateRequest);
-}
->>>>>>> f1ecd8a24c78ec869c261e6f5d7c7de6f84ceec7
