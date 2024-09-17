@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/template/settings")
 @AllArgsConstructor
-public class MailTemplateContoller {
+public class MailTemplateController {
     @Autowired
     private MailTemplateService mailTemplateService;
 

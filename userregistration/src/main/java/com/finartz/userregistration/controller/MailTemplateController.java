@@ -1,25 +1,55 @@
 package com.finartz.userregistration.controller;
 
+import com.finartz.userregistration.Result.Result;
+import com.finartz.userregistration.request.CreateMailTemplateRequest;
+import com.finartz.userregistration.request.DeleteMailTemplateRequest;
+import com.finartz.userregistration.request.UpdateMailTemplateRequest;
+import com.finartz.userregistration.response.MailTemplateResponse;
+import com.finartz.userregistration.service.MailTemplateService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.finartz.userregistration.entity.MailTemplate;
-import com.finartz.userregistration.request.CreateMailTemplateRequest;
-import com.finartz.userregistration.service.MailTemplateService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/mail-template")
+@RequestMapping("/api/template/settings")
+@AllArgsConstructor
 public class MailTemplateController {
     @Autowired
     private MailTemplateService mailTemplateService;
 
-    @PostMapping
-    public ResponseEntity<MailTemplate> createMailTemplate(@RequestBody CreateMailTemplateRequest request) {
-        return ResponseEntity.ok(mailTemplateService.createMailTemplate(request));
+    @PostMapping("/add")
+    public ResponseEntity<MailTemplateResponse> add(@RequestBody CreateMailTemplateRequest createTemplateMailRequest) {
+        return mailTemplateService.add(createTemplateMailRequest);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@RequestBody @Valid DeleteMailTemplateRequest deleteTempMailRequest){
+        Result result=this.mailTemplateService.delete(deleteTempMailRequest);
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<MailTemplateResponse> update(@RequestBody UpdateMailTemplateRequest updateTemplateMailRequest){
+        return mailTemplateService.update(updateTemplateMailRequest);
+    }
+    @GetMapping(value = "/{id}")
+    public  ResponseEntity<MailTemplateResponse> getById(@PathVariable @Valid Long id){
+        return mailTemplateService.getByid(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MailTemplateResponse>> getAll (){
+        return mailTemplateService.getAll();
+    }
+
+
+
+
+
 }
